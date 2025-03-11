@@ -7,7 +7,7 @@
 }
 
 .headerSolicitacao {
-  border: solid red;
+  //border: solid red;
   width: 20vw;
   display: flex;
 }
@@ -42,7 +42,7 @@ textarea {
 .grupo1 {
   width: 35%;
   height: 25vh;
-  border: solid green;
+ // border: solid green;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -84,7 +84,7 @@ textarea {
 //Estilizção do grupo2
 
 .grupo2 {
-  border: solid;
+  //border: solid;
   width: 60%;
   height: 25vh;
   display: flex;
@@ -94,17 +94,17 @@ textarea {
 }
 
 .inputData {
-  border: solid green;
+  //border: solid green;
   width: 20%;
 }
 
 .tipoDeDespesas {
-  border: solid blue;
+ // border: solid blue;
   width: 30%;
 }
 
 .centroDeCusto {
-  border: solid purple;
+  //border: solid purple;
   width: 45%;
 }
 
@@ -112,7 +112,7 @@ textarea {
 .divisoes,
 .pep,
 .distancia {
-  border: solid red;
+ // border: solid red;
   width: 8%;
 }
 
@@ -120,12 +120,12 @@ textarea {
 .valorKm,
 .valorFaturado,
 .despesa {
-  border: solid pink;
+ // border: solid pink;
   width: 11%;
 }
 
 .botoes {
-  border: solid red;
+  //border: solid red;
   width: 15%;
   display: flex;
   justify-content: space-evenly;

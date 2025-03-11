@@ -1,4 +1,4 @@
-import NavBar from "../navbar/NavBar.jsx";
+import NavBar from "../navbar/NavBar";
 import styles from "./Solicitacao.module.scss";
 import Home from "../../assets/Dashboard/home header.png";
 import Seta from "../../assets/Dashboard/Vector.png";

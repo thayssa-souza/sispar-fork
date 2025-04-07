@@ -13,7 +13,7 @@ function NavBar() {
 
   return (
     <nav className={styles.navBarEstilo}>
-      <button>
+      <button className={styles.buttonNavBar}>
         <img src={Fechar} alt="Botão abrir e fechar" />
       </button>
 
@@ -21,7 +21,7 @@ function NavBar() {
         <img src={Perfil} alt="Foto do perfil" />
 
         <div>
-          <button
+          <button className={styles.buttonNavBar}
             onClick={() => {
               navigate("/reembolsos");
             }}
@@ -29,21 +29,21 @@ function NavBar() {
             <img src={Home} alt="Botão Home" />
           </button>
 
-          <button onClick={()=>{navigate("/solicitacao")}}>
+          <button onClick={()=>{navigate("/solicitacao")}}  className={styles.buttonNavBar}>
             <img src={Reembolso} alt="Botão Reembolso" />
           </button>
 
-          <button onClick={()=>{navigate("/reembolsos")}}>
+          <button onClick={()=>{navigate("/reembolsos")}}  className={styles.buttonNavBar}>
             <img src={Pesquisa} alt="Botão Pesquisa" />
           </button>
 
-          <button onClick={()=>{navigate("/solicitacao")}}>
+          <button onClick={()=>{navigate("/solicitacao")}}  className={styles.buttonNavBar}>
             <img src={Historico} alt="Botão histórico" />
           </button>
         </div>
       </section>
 
-      <button className={styles.buttonSair}  onClick={()=>{navigate("/")}}>
+      <button className={styles.buttonSair}  onClick={()=>{navigate("/")}} >
         <img src={Sair} alt="Botão sair" />
       </button>
     </nav>

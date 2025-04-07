@@ -8,7 +8,7 @@
 
 .headerSolicitacao {
   //border: solid red;
-  width: 20vw;
+  width: 30vw;
   display: flex;
 }
 
@@ -16,7 +16,7 @@
   width: 100%;
 }
 
-.formSolicitacao {
+.formMain {
   display: flex;
   justify-content: space-between;
 }
@@ -39,10 +39,10 @@ textarea {
 }
 
 //Estilizção do grupo1
-.grupo1 {
+.formGrupo1 {
   width: 35%;
   height: 25vh;
- // border: solid green;
+  // border: solid green;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -83,8 +83,8 @@ textarea {
 
 //Estilizção do grupo2
 
-.grupo2 {
-  //border: solid;
+.formGrupo2 {
+  //border: solid green;
   width: 60%;
   height: 25vh;
   display: flex;
@@ -99,7 +99,7 @@ textarea {
 }
 
 .tipoDeDespesas {
- // border: solid blue;
+  // border: solid blue;
   width: 30%;
 }
 
@@ -112,7 +112,7 @@ textarea {
 .divisoes,
 .pep,
 .distancia {
- // border: solid red;
+  // border: solid red;
   width: 8%;
 }
 
@@ -120,7 +120,7 @@ textarea {
 .valorKm,
 .valorFaturado,
 .despesa {
- // border: solid pink;
+  // border: solid pink;
   width: 11%;
 }
 
@@ -128,38 +128,51 @@ textarea {
   //border: solid red;
   width: 15%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  padding-top: 0.5rem;
+  height: 6vh;
 
-  .botaoSalvar {
+  .salvar {
     background-color: #001a3d;
     color: #ffffff;
-    width: 5vw;
+    width: 60%;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
   }
-  .botaoDeletar {
-    width: 2vw;
+  .deletar {
+    width: 30%;
     background-color: #00bedd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
 //Estilização da tabela
-table{
-    width: 100%;
-    border: solid;
-border-collapse:collapse;
+table {
+  width: 100%;
+  border: solid;
+  border-collapse: collapse;
 }
-
 
 //Cabeçalho
-th{
-
-    background-color: #CBD4E1;
-    font-size: 1rem;
-    font-weight: 400;
-    color: #23282F;
+th {
+  background-color: #cbd4e1;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #23282f;
+  font-size: 1rem;
 }
 
+th,
+td {
+  border: solid;
+  text-align: center;
+}
 
-th,td{
-    border: solid;
-    text-align: center;
+//ÍCONES DA TABELA
+
+.lixeira {
 }

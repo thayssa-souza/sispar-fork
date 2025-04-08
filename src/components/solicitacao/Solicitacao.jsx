@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState } from "react"; // Importa o React e o hook useState
+
 import NavBar from "../navbar/NavBar.jsx";
 import styles from "./Solicitacao.module.scss";
 import Home from "../../assets/Dashboard/home header.png";
@@ -7,66 +8,137 @@ import Salvar from "../../assets/Solicitacao/+.png";
 import Deletar from "../../assets/Solicitacao/deletar.png";
 import Lixeira from "../../assets/Solicitacao/lixeira.png";
 import Motivo from "../../assets/Solicitacao/motivo.png";
-import Check from "../../assets/Solicitacao/check.png"
-import Cancelar from "../../assets/Solicitacao/x.png"
+import Check from "../../assets/Solicitacao/check.png";
+import Cancelar from "../../assets/Solicitacao/x.png";
 
 function Solicitacao() {
-  const [dadosReembolso, setDadosReembolso] = useState({
-    colaborador: "",
-    empresa: "",
-    nPrestacao: "",
-    descricao: "",
-    data: "",
-    motivo: "",
-    tipoReembolso: "",
-    centroCusto: "",
-    ordemInterna: "",
-    divisao: "",
-    pep: "",
-    moeda: "",
-    distanciaKm: "",
-    valorKm: "",
-    valorFaturado: "",
-    despesa: "",
-  });
+  //Usando o hook useState do React, que serve para criar e controlar um estado dentro do componente.
+  // const [estado, setEstado] = useState("")
+  //estado:  é a variável que guarda os dados (o valor atual).
+  //setEstado: é a função que atualiza esse valor.
+  // useState("")  O valor inicial é uma string vazia (""), ou seja, ainda não foi preenchido nada.
 
-  const [dados, setDados] = useState([]);
+  const [colaborador, setColaborador] = useState(""); // Estado para o campo colaborador
 
-  const handleChange = (e) => {
-    setDadosReembolso({ ...dadosReembolso, [e.target.name]: e.target.value });
-    console.log(e.target.value);
+  const [empresa, setEmpresa] = useState(""); // Estado para o campo empresa
+
+  const [nPrestacao, setnPrestacao] = useState(""); // Estado para o campo número de prestação
+
+  const [descricao, setDescricao] = useState(""); // Estado para o campo  descrição
+
+  const [data, setData] = useState(""); // Estado para o campo data
+
+  const [motivo, setMotivo] = useState(""); // Estado para o campo motivo
+
+  const [tipoReembolso, setTipoReembolso] = useState(""); // Estado para o campo tipo de reembolso
+
+  const [centroCusto, setCentroCusto] = useState(""); // Estado para o campo centro de custo
+
+  const [ordemInterna, setorOrdemInterna] = useState(""); // Estado para o campo ordem interna
+
+  const [divisao, setDivisao] = useState(""); // Estado para o campo divisão
+
+  const [pep, setPep] = useState(""); // Estado para o campo pep
+
+  const [moeda, setMoeda] = useState(""); // Estado para o campo moeda
+
+  const [distanciaKm, setDistanciaKm] = useState(""); // Estado para o campo distância km
+
+  const [valorKm, setValorKm] = useState(""); // Estado para o campo valor km
+
+  const [valorFaturado, setValorFaturado] = useState(""); // Estado para o campo valor faturado
+
+  const [despesa, setDespesa] = useState(""); // Estado para o campo despesa
+
+  const [dadosReembolso, setDadosReembolso] = useState([]);
+  // Esse é o array que irá receber os dados em formato de objeto
+  //useState([])  Estamos dizendo que o estado vai começar como um array vazio ([]), porque vamos armazenar vários objetos de reembolso ali.
+  //Criei uma caixinha chamada dadosReembolso para guardar todos os reembolsos que o usuário for adicionando.Ela começa vazia, e eu posso atualizar essa lista com a função setDadosReembolso.
+
+  //-------------------------------------FUNÇÃO PARA CAPTURAR OS VALORES DOS ESTADOS-----------------------
+
+  // Essa função captura os valores dos estados, coloca eles organizados em objetos que serão adicionados no array dadosReembolso para serem exibidos no map
+  // Função que é chamada quando o formulário é enviado
+
+  const handleSubmit = () => {
+    const objetoReembolso = {
+      empresa,
+      colaborador,
+      nPrestacao,
+      descricao,
+      data,
+      tipoReembolso,
+      ordemInterna,
+      centroCusto,
+      divisao,
+      pep,
+      moeda,
+      distanciaKm,
+      valorKm,
+      valorFaturado,
+      despesa,
+    };
+    //alert("Formulário enviado com sucesso!"); //mostra um alerta na tela para o usuário, avisando que o formulário foi enviado corretamente
+
+    setDadosReembolso(dadosReembolso.concat(objetoReembolso));
+
+    // Aqui acontece a atualização da lista de reembolsos.
+    // setDadosReembolso(...) atualiza o estado com essa nova lista.
+    // dadosReembolso é o estado atual com os reembolsos anteriores.
+    // concat(objetoReembolso) adiciona o novo reembolso no final da lista, sem modificar os anteriores.
+
+    limparCampos(); //quando clicar em salvar, ativa a função de limpar os campos
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setDados([...dados, dadosReembolso]);
-    console.log(dadosReembolso);
-    setDadosReembolso({
-      colaborador: "",
-      empresa: "",
-      nPrestacao: "",
-      descricao: "",
-      data: "",
-      motivo: "",
-      tipoReembolso: "",
-      centroCusto: "",
-      ordemInterna: "",
-      divisao: "",
-      pep: "",
-      moeda: "",
-      distanciaKm: "",
-      valorKm: "",
-      valorFaturado: "",
-      despesa: "",
-    });
+  ///----------------FUNÇÃO DE DELETAR ----------------------
+  // Essa função serve para remover um item da lista de reembolsos, com base no número da posição dele (índice). Ela cria uma nova lista sem aquele item e atualiza o estado com essa nova lista.
+
+  const handleDelete = (index) => {
+    setDadosReembolso(dadosReembolso.filter((item, i) => i !== index));
   };
 
-  const handleDelete = (event, index) => {
-    event.preventDefault();
-    event.stopPropagation(); // Impede propagação do clique para elementos pais
-    const updatedDados = dados.filter((_, i) => i !== index);
-    setDados(updatedDados);
+  // Essa é uma função chamada handleDelete.
+  // Ela recebe como parâmetro um index, que representa a posição do item que queremos remover da lista dadosReembolso.
+
+  // setDadosReembolso(...)  Aqui usamos o setDadosReembolso, que é a função que atualiza o estado dadosReembolso. Ou seja, estamos dizendo: "Atualize a lista de reembolsos com uma nova lista, sem o item que queremos excluir."
+
+  // dadosReembolso.filter((item, i) => i !== index)
+  // filter percorre toda a lista de reembolsos.
+  // Para cada item da lista, ele também pega o índice atual, representado por i. I = ÍNDICE ATUAL
+
+  // A condição i !== index diz: "só mantenha os itens cujo índice for diferente do índice que queremos remover."
+
+  // Resultado: o item com o índice passado na função é removido da lista, e todos os outros permanecem.
+
+  //--------------FUNÇÃO DE LIMPAR OS INPUTS QUANDO CLICAR EM SALVAR -----------------------
+
+  const limparCampos = () => {
+    setColaborador(""),
+      setEmpresa(""),
+      setnPrestacao(""),
+      setDescricao(""),
+      setData(""),
+      setMotivo(""),
+      setTipoReembolso(""),
+      setCentroCusto(""),
+      setorOrdemInterna(""),
+      setDivisao(""),
+      setPep(""),
+      setMoeda(""),
+      setDistanciaKm(""),
+      setValorKm(""),
+      setValorFaturado(""),
+      setDespesa("");
   };
+
+
+  //---------------FUNÇÃO PARA LIMPAR TODA A LISTA, AO CLICAR NO BOTÃO CANCELAR REEMBOLSO ----
+
+  const cancelarSolicitacao = () => {
+    setDadosReembolso([]); // limpa todos os dados salvos
+    limparCampos(); // limpa os inputs também (se quiser)
+  };
+
 
   return (
     <div className={styles.layoutSolicitacao}>
@@ -82,16 +154,30 @@ function Solicitacao() {
         </header>
 
         <main className={styles.mainSolicitacao}>
-          <form onSubmit={handleSubmit} className={styles.formMain}>
+          {/* onSubmit:  É um evento que dispara quando você clica no botão de “Enviar” 
+       (e) => e.preventDefault():Essa é uma função que bloqueia o comportamento padrão do formulário. */}
+
+          {/* OBS: Em HTML puro, quando você envia um <form>, ele recarrega a página automaticamente.
+Só que no React a gente não quer que isso aconteça, porque a gente controla tudo com JavaScript e hooks (useState, useEffect, etc).
+Por isso, usamos e.preventDefault() pra impedir o recarregamento da página. */}
+
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            className={styles.formMain}
+          >
             <div className={styles.formGrupo1}>
               <div className={styles.inputNome}>
+                {/* onChange:  é um evento no React (e também no HTML puro) que dispara quando o valor de um campo muda.
+Diz ao React: “toda vez que o usuário digitar algo nesse campo, atualize a variável colaborador com o novo valor”. 
+e.target.value é o que foi digitado pelo usuário.
+*/}
+
                 <label htmlFor="nome"> Nome Completo</label>
                 <input
-                  value={dadosReembolso.colaborador}
+                  value={colaborador}
                   name="colaborador"
-                  onChange={handleChange}
+                  onChange={(e) => setColaborador(e.target.value)}
                   type="text"
-                  id="nome-completo"
                 />
               </div>
 
@@ -99,8 +185,8 @@ function Solicitacao() {
                 <label htmlFor="empresa">Empresa</label>
                 <input
                   name="empresa"
-                  value={dadosReembolso.empresa}
-                  onChange={handleChange}
+                  value={empresa}
+                  onChange={(e) => setEmpresa(e.target.value)}
                   type="text"
                 />
               </div>
@@ -108,23 +194,22 @@ function Solicitacao() {
               <div className={styles.inputPrestacao}>
                 <label htmlFor="prestacao"> Nº Prest. Contas</label>
                 <input
-                  value={dadosReembolso.nPrestacao}
-                  onChange={handleChange}
+                  value={nPrestacao}
+                  onChange={(e) => setnPrestacao(e.target.value)}
                   type="number"
                   name="nPrestacao"
-                  id=""
                 />
               </div>
 
               <div className={styles.inputMotivo}>
-                <label htmlFor="motivo">Descrição / Motivo do Reembolso</label>
+                <label htmlFor="descricao">
+                  Descrição / Motivo do Reembolso
+                </label>
 
                 <textarea
                   name="descricao"
-                  value={dadosReembolso.descricao}
-                  onChange={handleChange}
-                  minLength="10"
-                  maxLength="30"
+                  value={descricao}
+                  onChange={(e) => setDescricao(e.target.value)}
                 />
               </div>
             </div>
@@ -135,11 +220,10 @@ function Solicitacao() {
               <div className={styles.inputData}>
                 <label htmlFor="date"> Data</label>
                 <input
-                  value={dadosReembolso.data}
-                  onChange={handleChange}
+                  value={data}
+                  onChange={(e) => setData(e.target.value)}
                   type="date"
                   name="data"
-                  id="data"
                 />
               </div>
 
@@ -147,9 +231,9 @@ function Solicitacao() {
                 <label htmlFor="tipoReembolso"> Tipo de Despesa </label>
 
                 <select
-                  value={dadosReembolso.tipoReembolso}
+                  value={tipoReembolso}
                   name="tipoReembolso"
-                  onChange={handleChange}
+                  onChange={(e) => setTipoReembolso(e.target.value)}
                   id="tipoReembolso"
                 >
                   <option value="selecionar">Selecionar</option>
@@ -166,8 +250,8 @@ function Solicitacao() {
               <div className={styles.centroDeCusto}>
                 <label htmlFor="custo">Centro de Custo</label>
                 <select
-                  value={dadosReembolso.centroCusto}
-                  onChange={handleChange}
+                  value={centroCusto}
+                  onChange={(e) => setCentroCusto(e.target.value)}
                   name="centroCusto"
                   id="centroCusto"
                 >
@@ -188,9 +272,9 @@ function Solicitacao() {
               <div className={styles.ordem}>
                 <label htmlFor="ordemInterna">Ord. Int.</label>
                 <input
-                  value={dadosReembolso.ordemInterna}
+                  value={ordemInterna}
                   name="ordemInterna"
-                  onChange={handleChange}
+                  onChange={(e) => setorOrdemInterna(e.target.value)}
                   id="ordemInterna"
                   type="text"
                 />
@@ -201,17 +285,17 @@ function Solicitacao() {
                 <input
                   type="text"
                   id="divisao"
-                  onChange={handleChange}
+                  onChange={(e) => setDivisao(e.target.value)}
                   name="divisao"
-                  value={dadosReembolso.divisao}
+                  value={divisao}
                 />
               </div>
 
               <div className={styles.pep}>
                 <label htmlFor="pep">PEP</label>
                 <input
-                  value={dadosReembolso.pep}
-                  onChange={handleChange}
+                  value={pep}
+                  onChange={(e) => setPep(e.target.value)}
                   name="pep"
                   id="PEP"
                   type="text"
@@ -221,8 +305,8 @@ function Solicitacao() {
               <div className={styles.moeda}>
                 <label htmlFor="moeda">Moeda</label>
                 <select
-                  value={dadosReembolso.moeda}
-                  onChange={handleChange}
+                  value={moeda}
+                  onChange={(e) => setMoeda(e.target.value)}
                   name="moeda"
                   id="coents"
                 >
@@ -236,9 +320,9 @@ function Solicitacao() {
               <div className={styles.distancia}>
                 <label htmlFor="distancia">Dist. / Km</label>
                 <input
-                  value={dadosReembolso.distanciaKm}
+                  value={distanciaKm}
                   name="distanciaKm"
-                  onChange={handleChange}
+                  onChange={(e) => setDistanciaKm(e.target.value)}
                   id="distance-input"
                   type="text"
                 />
@@ -247,10 +331,9 @@ function Solicitacao() {
               <div className={styles.valorKm}>
                 <label htmlFor="valor">Valor / Km</label>
                 <input
-                  value={dadosReembolso.valorKm}
-                  onChange={handleChange}
+                  value={valorKm}
+                  onChange={(e) => setValorKm(e.target.value)}
                   name="valorKm"
-                  id="value-km"
                   type="text"
                 />
               </div>
@@ -259,10 +342,9 @@ function Solicitacao() {
                 <label htmlFor="faturado"> Val. Faturado </label>
                 <input
                   type="text"
-                  id="valorFaturado"
                   name="valorFaturado"
-                  value={dadosReembolso.valorFaturado}
-                  onChange={handleChange}
+                  value={valorFaturado}
+                  onChange={(e) => setValorFaturado(e.target.value)}
                 />
               </div>
 
@@ -272,20 +354,26 @@ function Solicitacao() {
                   type="text"
                   id="despesa"
                   name="despesa"
-                  value={dadosReembolso.despesa}
-                  onChange={handleChange}
+                  value={despesa}
+                  onChange={(e) => setDespesa(e.target.value)}
                 />
               </div>
 
               <div className={styles.botoes}>
-                <button className={styles.salvar} type="submit">
+                <button
+                  className={styles.salvar}
+                  onClick={handleSubmit}
+                  type="submit"
+                >
                   <img src={Salvar} alt="" /> Salvar
                 </button>
 
                 <button
                   className={styles.deletar}
                   type="button"
-                  onClick={() => handleDelete()}
+                  onClick={() => {
+                    limparCampos();
+                  }}
                 >
                   <img src={Deletar} alt="" />
                 </button>
@@ -322,10 +410,13 @@ function Solicitacao() {
             </thead>
 
             <tbody>
-              {dados.map((item, index) => (
+              {dadosReembolso.map((item, index) => (
                 <tr key={index}>
                   <td>
-                    <button onClick={(e) => handleDelete(e, index)}>
+                    <button
+                      onClick={() => handleDelete(index)}
+                      className={styles.btnLixeira}
+                    >
                       <img
                         className={styles.lixeira}
                         src={Lixeira}
@@ -345,7 +436,6 @@ function Solicitacao() {
                   </td>
 
                   {/* <td>{item.descricao}</td> */}
-
                   <td>{item.tipoReembolso}</td>
                   <td>{item.centroCusto}</td>
                   <td>{item.ordemInterna}</td>
@@ -380,7 +470,7 @@ function Solicitacao() {
                 <img src={Check} alt="" /> Enviar para Análise{" "}
               </button>
 
-              <button className={styles.buttonCancelar}>
+              <button className={styles.buttonCancelar} onClick={cancelarSolicitacao}>
                 {" "}
                 <img src={Cancelar} alt="" /> Cancelar Solicitação{" "}
               </button>

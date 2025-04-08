@@ -47,6 +47,12 @@ header {
   margin-top: 1rem;
 }
 
+.card:hover{
+  background-color: #F1F4F9;
+  border: solid;
+  cursor: pointer;
+}
+
 .containerDados {
   border: solid #cbd4e1;
   width: 70%;

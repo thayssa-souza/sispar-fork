@@ -159,7 +159,7 @@ table {
 
 //Cabeçalho
 th {
-  background-color: #cbd4e1;
+  background-color: #CBD4E1;
   font-size: 1rem;
   font-weight: 400;
   color: #23282f;
@@ -172,10 +172,19 @@ td {
   text-align: center;
 }
 
+.btnLixeira {
+  border: none;
+  :hover {
+    background-color: #a60b2f;
+    border-radius: 6px;
+  }
+}
+
+
 //Footer
 
 .footerSolicitacao {
- // background-color: pink;
+  // background-color: pink;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
@@ -191,7 +200,7 @@ td {
   }
 
   div {
-   // border: solid;
+    // border: solid;
     width: 20%;
     height: 10vh;
     display: flex;
@@ -207,7 +216,7 @@ td {
     width: 50%;
 
     .buttonAnalise {
-      background-color: #001A3D;
+      background-color: #001a3d;
       width: 40%;
       height: 6vh;
       display: flex;
@@ -217,7 +226,7 @@ td {
     }
 
     .buttonCancelar {
-      background-color: #A60B2F;
+      background-color: #a60b2f;
       width: 40%;
       height: 6vh;
       display: flex;
@@ -227,3 +236,4 @@ td {
     }
   }
 }
+

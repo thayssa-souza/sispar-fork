@@ -7,6 +7,8 @@ import Salvar from "../../assets/Solicitacao/+.png";
 import Deletar from "../../assets/Solicitacao/deletar.png";
 import Lixeira from "../../assets/Solicitacao/lixeira.png";
 import Motivo from "../../assets/Solicitacao/motivo.png";
+import Check from "../../assets/Solicitacao/check.png"
+import Cancelar from "../../assets/Solicitacao/x.png"
 
 function Solicitacao() {
   const [dadosReembolso, setDadosReembolso] = useState({
@@ -80,7 +82,7 @@ function Solicitacao() {
         </header>
 
         <main className={styles.mainSolicitacao}>
-        <form onSubmit={handleSubmit} className={styles.formMain}>
+          <form onSubmit={handleSubmit} className={styles.formMain}>
             <div className={styles.formGrupo1}>
               <div className={styles.inputNome}>
                 <label htmlFor="nome"> Nome Completo</label>
@@ -121,8 +123,8 @@ function Solicitacao() {
                   name="descricao"
                   value={dadosReembolso.descricao}
                   onChange={handleChange}
-                  minLength="20"
-                  maxLength="300"
+                  minLength="10"
+                  maxLength="30"
                 />
               </div>
             </div>
@@ -196,7 +198,13 @@ function Solicitacao() {
 
               <div className={styles.divisoes}>
                 <label htmlFor="divisao">Div.</label>
-                <input type="text" id="divisao"   onChange={handleChange} name="divisao" value={dadosReembolso.divisao}/>
+                <input
+                  type="text"
+                  id="divisao"
+                  onChange={handleChange}
+                  name="divisao"
+                  value={dadosReembolso.divisao}
+                />
               </div>
 
               <div className={styles.pep}>
@@ -249,26 +257,36 @@ function Solicitacao() {
 
               <div className={styles.valorFaturado}>
                 <label htmlFor="faturado"> Val. Faturado </label>
-                <input type="text" id="valorFaturado" name="valorFaturado" value={dadosReembolso.valorFaturado} onChange={handleChange}/>
+                <input
+                  type="text"
+                  id="valorFaturado"
+                  name="valorFaturado"
+                  value={dadosReembolso.valorFaturado}
+                  onChange={handleChange}
+                />
               </div>
 
               <div className={styles.despesa}>
                 <label htmlFor="taxa"> Despesa </label>
-                <input type="text" id="despesa" name="despesa" value={dadosReembolso.despesa} onChange={handleChange}/>
+                <input
+                  type="text"
+                  id="despesa"
+                  name="despesa"
+                  value={dadosReembolso.despesa}
+                  onChange={handleChange}
+                />
               </div>
 
               <div className={styles.botoes}>
-               
-                <button
-                  className={styles.salvar}
-                  type="submit"
-                  
-                >
-                  
+                <button className={styles.salvar} type="submit">
                   <img src={Salvar} alt="" /> Salvar
                 </button>
 
-                <button className={styles.deletar} type="button" onClick={() => handleDelete()}>
+                <button
+                  className={styles.deletar}
+                  type="button"
+                  onClick={() => handleDelete()}
+                >
                   <img src={Deletar} alt="" />
                 </button>
               </div>
@@ -308,7 +326,11 @@ function Solicitacao() {
                 <tr key={index}>
                   <td>
                     <button onClick={(e) => handleDelete(e, index)}>
-                      <img  className={styles.lixeira} src={Lixeira} alt="Deletar" />
+                      <img
+                        className={styles.lixeira}
+                        src={Lixeira}
+                        alt="Deletar"
+                      />
                     </button>
                   </td>
                   <td>{item.colaborador}</td>
@@ -339,6 +361,32 @@ function Solicitacao() {
             </tbody>
           </table>
         </main>
+
+        <footer className={styles.footerSolicitacao}>
+          <section>
+            <div className={styles.inputFooter}>
+              <label> Total Faturado </label>
+              <input placeholder="0,00" />
+            </div>
+
+            <div>
+              <label> Total Despesa </label>
+              <input placeholder="0,00" />
+            </div>
+
+            <div className={styles.boxButtonFooter}>
+              <button className={styles.buttonAnalise}>
+                {" "}
+                <img src={Check} alt="" /> Enviar para Análise{" "}
+              </button>
+
+              <button className={styles.buttonCancelar}>
+                {" "}
+                <img src={Cancelar} alt="" /> Cancelar Solicitação{" "}
+              </button>
+            </div>
+          </section>
+        </footer>
       </div>
     </div>
   );

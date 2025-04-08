@@ -172,7 +172,58 @@ td {
   text-align: center;
 }
 
-//ÍCONES DA TABELA
+//Footer
 
-.lixeira {
+.footerSolicitacao {
+ // background-color: pink;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+  height: 15vh;
+
+  section {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 50%;
+    height: 15vh;
+  }
+
+  div {
+   // border: solid;
+    width: 20%;
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  .boxButtonFooter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 50%;
+
+    .buttonAnalise {
+      background-color: #001A3D;
+      width: 40%;
+      height: 6vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      color: white;
+    }
+
+    .buttonCancelar {
+      background-color: #A60B2F;
+      width: 40%;
+      height: 6vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      color: white;
+    }
+  }
 }

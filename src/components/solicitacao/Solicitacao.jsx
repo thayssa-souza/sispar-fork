@@ -90,6 +90,31 @@ function Solicitacao() {
     limparCampos(); //quando clicar em salvar, ativa a função de limpar os campos
   };
 
+  //--------------------FUNÇÃO PARA ENVIAR OS DADOS PARA O BD -----------
+
+  const API_URL = "https://minhaapi.com.br"; //// URL base da API (o endereço do servidor que vai receber os dados)
+
+  //// Função que será chamada quando quisermos enviar os dados do reembolso
+  const enviarParaAnalise = async () => {
+    // O try faz parte da sintaxe do JavaScript e é usado para tentar executar um bloco de código. Ele vem junto com o catch, que captura e trata qualquer erro que acontecer dentro do try.
+    try { 
+      const response = await fetch(`${API_URL}/api/reembolsos`, { // tentar enviar os dados
+        // Aqui usamos o fetch para fazer uma requisição para o servidor
+        method: "POST", // Enviamos os dados com o método POST (ou seja, estamos mandando informações para serem salvas)
+        headers: { "Content-Type": "application/json" }, // Estamos dizendo que os dados estão no formato JSON
+        body: JSON.stringify(dadosReembolso), // Aqui enviamos os dados (transformados em texto JSON)
+      });
+
+      if (response.ok) {
+        alert("Solicitação enviada com sucesso!"); // Se a resposta do servidor for OK (status 200), mostramos mensagem de sucesso
+      } else {
+        alert("Erro ao enviar solicitação"); // Se deu algum erro na requisição (ex: erro 400 ou 500), mostramos mensagem de erro
+      }
+    } catch (error) {
+      alert("Erro na conexão com o servidor"); // Se algo der errado no try, cai aqui (sem internet, servidor fora do ar, etc), mostramos essa mensagem
+    }
+  };
+
   ///----------------FUNÇÃO DE DELETAR ----------------------
   // Essa função serve para remover um item da lista de reembolsos, com base no número da posição dele (índice). Ela cria uma nova lista sem aquele item e atualiza o estado com essa nova lista.
 
@@ -131,7 +156,6 @@ function Solicitacao() {
       setDespesa("");
   };
 
-
   //---------------FUNÇÃO PARA LIMPAR TODA A LISTA, AO CLICAR NO BOTÃO CANCELAR REEMBOLSO ----
 
   const cancelarSolicitacao = () => {
@@ -139,6 +163,7 @@ function Solicitacao() {
     limparCampos(); // limpa os inputs também (se quiser)
   };
 
+  //-------------------
 
   return (
     <div className={styles.layoutSolicitacao}>
@@ -456,21 +481,51 @@ e.target.value é o que foi digitado pelo usuário.
           <section>
             <div className={styles.inputFooter}>
               <label> Total Faturado </label>
-              <input placeholder="0,00" />
+
+              <input
+                type="text"
+                value={dadosReembolso
+                  .reduce(
+                    (total, item) => total + Number(item.valorFaturado || 0),
+                    0
+                  )
+                  .toFixed(2)}
+              />
             </div>
 
+            {/* 
+.reduce serve para percorrer a lista inteira e somar os valores de valorFaturado/despesa.
+Soma o total atual com o valor da despesa do item.
+Usa Number(...) para garantir que seja um número (evita erros caso venha uma string).
+O 0 no final é o valor inicial da soma
+
+Usa item.despesa || 0 para evitar undefined — se não tiver valor, ele usa 0.
+.tofixed: Ele formata o número com 2 casas decimais.
+Mesmo que a soma dê 150, ele vai mostrar 150.00.
+Se a soma for 10.5, vai mostrar 10.50. */}
             <div>
               <label> Total Despesa </label>
-              <input placeholder="0,00" />
+              <input
+                type="text"
+                value={dadosReembolso
+                  .reduce((total, item) => total + Number(item.despesa || 0), 0)
+                  .toFixed(2)}
+              />
             </div>
 
             <div className={styles.boxButtonFooter}>
-              <button className={styles.buttonAnalise}>
+              <button
+                className={styles.buttonAnalise}
+                onClick={enviarParaAnalise}
+              >
                 {" "}
                 <img src={Check} alt="" /> Enviar para Análise{" "}
               </button>
 
-              <button className={styles.buttonCancelar} onClick={cancelarSolicitacao}>
+              <button
+                className={styles.buttonCancelar}
+                onClick={cancelarSolicitacao}
+              >
                 {" "}
                 <img src={Cancelar} alt="" /> Cancelar Solicitação{" "}
               </button>

@@ -1,4 +1,4 @@
-import { useState } from "react"; // Importa o React e o hook useState
+import { useState, useEffect } from "react"; // Importa o React e o hook useState
 
 import NavBar from "../navbar/NavBar.jsx";
 import styles from "./Solicitacao.module.scss";
@@ -10,6 +10,8 @@ import Lixeira from "../../assets/Solicitacao/lixeira.png";
 import Motivo from "../../assets/Solicitacao/motivo.png";
 import Check from "../../assets/Solicitacao/check.png";
 import Cancelar from "../../assets/Solicitacao/x.png";
+
+import Api from "../../Services/Api.jsx"; //importando a conexão
 
 function Solicitacao() {
   //Usando o hook useState do React, que serve para criar e controlar um estado dentro do componente.
@@ -55,6 +57,15 @@ function Solicitacao() {
   //useState([])  Estamos dizendo que o estado vai começar como um array vazio ([]), porque vamos armazenar vários objetos de reembolso ali.
   //Criei uma caixinha chamada dadosReembolso para guardar todos os reembolsos que o usuário for adicionando.Ela começa vazia, e eu posso atualizar essa lista com a função setDadosReembolso.
 
+  const [enviado, setEnviado] = useState(false);
+
+  useEffect(() => {
+    if (enviado) {
+      setDadosReembolso([]); // Limpa os dados após o envio
+      setEnviado(false); // Reseta o estado de controle
+    }
+  }, [enviado]);
+
   //-------------------------------------FUNÇÃO PARA CAPTURAR OS VALORES DOS ESTADOS-----------------------
 
   // Essa função captura os valores dos estados, coloca eles organizados em objetos que serão adicionados no array dadosReembolso para serem exibidos no map
@@ -91,27 +102,22 @@ function Solicitacao() {
   };
 
   //--------------------FUNÇÃO PARA ENVIAR OS DADOS PARA O BD -----------
-
-  const API_URL = "https://minhaapi.com.br"; //// URL base da API (o endereço do servidor que vai receber os dados)
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NDM5ODU5NiwianRpIjoiOTdkNWI0YmUtOTU3My00ZmEzLTlkY2ItMjE2MGY3MmRiZmUzIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3NDQzOTg1OTYsImNzcmYiOiIwNGViOTcwNy05NDFjLTQwYWItOTJiZS04ZjU0MTliNGFmOTQiLCJleHAiOjE3NDQzOTk0OTZ9.R87xKzHSVishWF8ZNjWnRnhfoEmS0GXx4sN2y6TUR70";
 
   //// Função que será chamada quando quisermos enviar os dados do reembolso
   const enviarParaAnalise = async () => {
-    // O try faz parte da sintaxe do JavaScript e é usado para tentar executar um bloco de código. Ele vem junto com o catch, que captura e trata qualquer erro que acontecer dentro do try.
-    try { 
-      const response = await fetch(`${API_URL}/api/reembolsos`, { // tentar enviar os dados
-        // Aqui usamos o fetch para fazer uma requisição para o servidor
-        method: "POST", // Enviamos os dados com o método POST (ou seja, estamos mandando informações para serem salvas)
-        headers: { "Content-Type": "application/json" }, // Estamos dizendo que os dados estão no formato JSON
-        body: JSON.stringify(dadosReembolso), // Aqui enviamos os dados (transformados em texto JSON)
+    try {
+      const response = await Api.post("/refunds/new", dadosReembolso, {
+        headers: {
+          authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       });
-
-      if (response.ok) {
-        alert("Solicitação enviada com sucesso!"); // Se a resposta do servidor for OK (status 200), mostramos mensagem de sucesso
-      } else {
-        alert("Erro ao enviar solicitação"); // Se deu algum erro na requisição (ex: erro 400 ou 500), mostramos mensagem de erro
-      }
+  
+      setEnviado(true); // Aciona o useEffect
     } catch (error) {
-      alert("Erro na conexão com o servidor"); // Se algo der errado no try, cai aqui (sem internet, servidor fora do ar, etc), mostramos essa mensagem
+      console.error("Erro ao enviar:", error);
     }
   };
 

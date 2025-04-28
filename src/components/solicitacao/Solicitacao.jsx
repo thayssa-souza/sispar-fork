@@ -36,7 +36,7 @@ function Solicitacao() {
 
   const [centroCusto, setCentroCusto] = useState(""); // Estado para o campo centro de custo
 
-  const [ordemInterna, setorOrdemInterna] = useState(""); // Estado para o campo ordem interna
+  const [ordemInterna, setOrdemInterna] = useState(""); // Estado para o campo ordem interna
 
   const [divisao, setDivisao] = useState(""); // Estado para o campo divisão
 
@@ -57,8 +57,10 @@ function Solicitacao() {
   //useState([])  Estamos dizendo que o estado vai começar como um array vazio ([]), porque vamos armazenar vários objetos de reembolso ali.
   //Criei uma caixinha chamada dadosReembolso para guardar todos os reembolsos que o usuário for adicionando.Ela começa vazia, e eu posso atualizar essa lista com a função setDadosReembolso.
 
+  // Esse estado serve para saber se o formulário foi enviado para API
   const [enviado, setEnviado] = useState(false);
 
+  // useEffect observa a variável e toda vez que seu valor alterar, ele será acionado
   useEffect(() => {
     if (enviado) {
       setDadosReembolso([]); // Limpa os dados após o envio
@@ -70,6 +72,7 @@ function Solicitacao() {
 
   // Essa função captura os valores dos estados, coloca eles organizados em objetos que serão adicionados no array dadosReembolso para serem exibidos no map
   // Função que é chamada quando o formulário é enviado
+  // Como json trabalha com objetos, aqui estamos organizando os dados em um objeto chamado objetoReembolso
 
   const handleSubmit = () => {
     const objetoReembolso = {
@@ -91,7 +94,7 @@ function Solicitacao() {
     };
     //alert("Formulário enviado com sucesso!"); //mostra um alerta na tela para o usuário, avisando que o formulário foi enviado corretamente
 
-    setDadosReembolso(dadosReembolso.concat(objetoReembolso));
+    setDadosReembolso(dadosReembolso.concat(objetoReembolso)); // Aqui estamos atualizando o estado dadosReembolso com os novos dados que foram capturados no objetoReembolso.
 
     // Aqui acontece a atualização da lista de reembolsos.
     // setDadosReembolso(...) atualiza o estado com essa nova lista.
@@ -114,8 +117,9 @@ function Solicitacao() {
           "Content-Type": "application/json",
         },
       });
-  
-      setEnviado(true); // Aciona o useEffect
+
+      alert("Reembolso solicitado com sucesso!");
+      setEnviado(true); // Aciona o useEffect, alterando o estado de enviado como true já que foi enviado para API
     } catch (error) {
       console.error("Erro ao enviar:", error);
     }
@@ -152,7 +156,7 @@ function Solicitacao() {
       setMotivo(""),
       setTipoReembolso(""),
       setCentroCusto(""),
-      setorOrdemInterna(""),
+      setOrdemInterna(""),
       setDivisao(""),
       setPep(""),
       setMoeda(""),
@@ -305,7 +309,7 @@ e.target.value é o que foi digitado pelo usuário.
                 <input
                   value={ordemInterna}
                   name="ordemInterna"
-                  onChange={(e) => setorOrdemInterna(e.target.value)}
+                  onChange={(e) => setOrdemInterna(e.target.value)}
                   id="ordemInterna"
                   type="text"
                 />

@@ -11,65 +11,51 @@ import Motivo from "../../assets/Solicitacao/motivo.png";
 import Check from "../../assets/Solicitacao/check.png";
 import Cancelar from "../../assets/Solicitacao/x.png";
 
-import Api from "../../Services/Api.jsx"; //importando a conexão
+import Api from "../../Services/Api.jsx"; 
 
 function Solicitacao() {
-  //Usando o hook useState do React, que serve para criar e controlar um estado dentro do componente.
-  // const [estado, setEstado] = useState("")
-  //estado:  é a variável que guarda os dados (o valor atual).
-  //setEstado: é a função que atualiza esse valor.
-  // useState("")  O valor inicial é uma string vazia (""), ou seja, ainda não foi preenchido nada.
+  const [colaborador, setColaborador] = useState("");
 
-  const [colaborador, setColaborador] = useState(""); // Estado para o campo colaborador
+  const [empresa, setEmpresa] = useState("");
 
-  const [empresa, setEmpresa] = useState(""); // Estado para o campo empresa
+  const [nPrestacao, setnPrestacao] = useState("");
 
-  const [nPrestacao, setnPrestacao] = useState(""); // Estado para o campo número de prestação
+  const [descricao, setDescricao] = useState("");
 
-  const [descricao, setDescricao] = useState(""); // Estado para o campo  descrição
+  const [data, setData] = useState("");
 
-  const [data, setData] = useState(""); // Estado para o campo data
+  const [motivo, setMotivo] = useState("");
 
-  const [motivo, setMotivo] = useState(""); // Estado para o campo motivo
+  const [tipoReembolso, setTipoReembolso] = useState("");
 
-  const [tipoReembolso, setTipoReembolso] = useState(""); // Estado para o campo tipo de reembolso
+  const [centroCusto, setCentroCusto] = useState("");
 
-  const [centroCusto, setCentroCusto] = useState(""); // Estado para o campo centro de custo
+  const [ordemInterna, setOrdemInterna] = useState("");
 
-  const [ordemInterna, setorOrdemInterna] = useState(""); // Estado para o campo ordem interna
+  const [divisao, setDivisao] = useState("");
 
-  const [divisao, setDivisao] = useState(""); // Estado para o campo divisão
+  const [pep, setPep] = useState("");
 
-  const [pep, setPep] = useState(""); // Estado para o campo pep
+  const [moeda, setMoeda] = useState("");
 
-  const [moeda, setMoeda] = useState(""); // Estado para o campo moeda
+  const [distanciaKm, setDistanciaKm] = useState("");
 
-  const [distanciaKm, setDistanciaKm] = useState(""); // Estado para o campo distância km
+  const [valorKm, setValorKm] = useState("");
 
-  const [valorKm, setValorKm] = useState(""); // Estado para o campo valor km
+  const [valorFaturado, setValorFaturado] = useState("");
 
-  const [valorFaturado, setValorFaturado] = useState(""); // Estado para o campo valor faturado
-
-  const [despesa, setDespesa] = useState(""); // Estado para o campo despesa
+  const [despesa, setDespesa] = useState("");
 
   const [dadosReembolso, setDadosReembolso] = useState([]);
-  // Esse é o array que irá receber os dados em formato de objeto
-  //useState([])  Estamos dizendo que o estado vai começar como um array vazio ([]), porque vamos armazenar vários objetos de reembolso ali.
-  //Criei uma caixinha chamada dadosReembolso para guardar todos os reembolsos que o usuário for adicionando.Ela começa vazia, e eu posso atualizar essa lista com a função setDadosReembolso.
 
   const [enviado, setEnviado] = useState(false);
 
   useEffect(() => {
     if (enviado) {
-      setDadosReembolso([]); // Limpa os dados após o envio
-      setEnviado(false); // Reseta o estado de controle
+      setDadosReembolso([]);
+      setEnviado(false);
     }
   }, [enviado]);
-
-  //-------------------------------------FUNÇÃO PARA CAPTURAR OS VALORES DOS ESTADOS-----------------------
-
-  // Essa função captura os valores dos estados, coloca eles organizados em objetos que serão adicionados no array dadosReembolso para serem exibidos no map
-  // Função que é chamada quando o formulário é enviado
 
   const handleSubmit = () => {
     const objetoReembolso = {
@@ -89,23 +75,16 @@ function Solicitacao() {
       valorFaturado,
       despesa,
     };
-    //alert("Formulário enviado com sucesso!"); //mostra um alerta na tela para o usuário, avisando que o formulário foi enviado corretamente
 
     setDadosReembolso(dadosReembolso.concat(objetoReembolso));
 
-    // Aqui acontece a atualização da lista de reembolsos.
-    // setDadosReembolso(...) atualiza o estado com essa nova lista.
-    // dadosReembolso é o estado atual com os reembolsos anteriores.
-    // concat(objetoReembolso) adiciona o novo reembolso no final da lista, sem modificar os anteriores.
-
-    limparCampos(); //quando clicar em salvar, ativa a função de limpar os campos
+    limparCampos();
   };
 
-  //--------------------FUNÇÃO PARA ENVIAR OS DADOS PARA O BD -----------
+
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NDM5ODU5NiwianRpIjoiOTdkNWI0YmUtOTU3My00ZmEzLTlkY2ItMjE2MGY3MmRiZmUzIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3NDQzOTg1OTYsImNzcmYiOiIwNGViOTcwNy05NDFjLTQwYWItOTJiZS04ZjU0MTliNGFmOTQiLCJleHAiOjE3NDQzOTk0OTZ9.R87xKzHSVishWF8ZNjWnRnhfoEmS0GXx4sN2y6TUR70";
 
-  //// Função que será chamada quando quisermos enviar os dados do reembolso
   const enviarParaAnalise = async () => {
     try {
       const response = await Api.post("/refunds/new", dadosReembolso, {
@@ -115,33 +94,18 @@ function Solicitacao() {
         },
       });
   
+      alert("Reembolso enviado com sucesso!");
       setEnviado(true); // Aciona o useEffect
     } catch (error) {
       console.error("Erro ao enviar:", error);
     }
   };
 
-  ///----------------FUNÇÃO DE DELETAR ----------------------
-  // Essa função serve para remover um item da lista de reembolsos, com base no número da posição dele (índice). Ela cria uma nova lista sem aquele item e atualiza o estado com essa nova lista.
 
   const handleDelete = (index) => {
     setDadosReembolso(dadosReembolso.filter((item, i) => i !== index));
   };
 
-  // Essa é uma função chamada handleDelete.
-  // Ela recebe como parâmetro um index, que representa a posição do item que queremos remover da lista dadosReembolso.
-
-  // setDadosReembolso(...)  Aqui usamos o setDadosReembolso, que é a função que atualiza o estado dadosReembolso. Ou seja, estamos dizendo: "Atualize a lista de reembolsos com uma nova lista, sem o item que queremos excluir."
-
-  // dadosReembolso.filter((item, i) => i !== index)
-  // filter percorre toda a lista de reembolsos.
-  // Para cada item da lista, ele também pega o índice atual, representado por i. I = ÍNDICE ATUAL
-
-  // A condição i !== index diz: "só mantenha os itens cujo índice for diferente do índice que queremos remover."
-
-  // Resultado: o item com o índice passado na função é removido da lista, e todos os outros permanecem.
-
-  //--------------FUNÇÃO DE LIMPAR OS INPUTS QUANDO CLICAR EM SALVAR -----------------------
 
   const limparCampos = () => {
     setColaborador(""),
@@ -152,7 +116,7 @@ function Solicitacao() {
       setMotivo(""),
       setTipoReembolso(""),
       setCentroCusto(""),
-      setorOrdemInterna(""),
+      setOrdemInterna(""),
       setDivisao(""),
       setPep(""),
       setMoeda(""),
@@ -162,14 +126,12 @@ function Solicitacao() {
       setDespesa("");
   };
 
-  //---------------FUNÇÃO PARA LIMPAR TODA A LISTA, AO CLICAR NO BOTÃO CANCELAR REEMBOLSO ----
 
   const cancelarSolicitacao = () => {
-    setDadosReembolso([]); // limpa todos os dados salvos
-    limparCampos(); // limpa os inputs também (se quiser)
+    setDadosReembolso([]);
+    limparCampos();
   };
 
-  //-------------------
 
   return (
     <div className={styles.layoutSolicitacao}>
@@ -185,12 +147,6 @@ function Solicitacao() {
         </header>
 
         <main className={styles.mainSolicitacao}>
-          {/* onSubmit:  É um evento que dispara quando você clica no botão de “Enviar” 
-       (e) => e.preventDefault():Essa é uma função que bloqueia o comportamento padrão do formulário. */}
-
-          {/* OBS: Em HTML puro, quando você envia um <form>, ele recarrega a página automaticamente.
-Só que no React a gente não quer que isso aconteça, porque a gente controla tudo com JavaScript e hooks (useState, useEffect, etc).
-Por isso, usamos e.preventDefault() pra impedir o recarregamento da página. */}
 
           <form
             onSubmit={(e) => e.preventDefault()}
@@ -198,11 +154,7 @@ Por isso, usamos e.preventDefault() pra impedir o recarregamento da página. */}
           >
             <div className={styles.formGrupo1}>
               <div className={styles.inputNome}>
-                {/* onChange:  é um evento no React (e também no HTML puro) que dispara quando o valor de um campo muda.
-Diz ao React: “toda vez que o usuário digitar algo nesse campo, atualize a variável colaborador com o novo valor”. 
-e.target.value é o que foi digitado pelo usuário.
-*/}
-
+                
                 <label htmlFor="nome"> Nome Completo</label>
                 <input
                   value={colaborador}
@@ -305,7 +257,7 @@ e.target.value é o que foi digitado pelo usuário.
                 <input
                   value={ordemInterna}
                   name="ordemInterna"
-                  onChange={(e) => setorOrdemInterna(e.target.value)}
+                  onChange={(e) => setOrdemInterna(e.target.value)}
                   id="ordemInterna"
                   type="text"
                 />
@@ -412,12 +364,6 @@ e.target.value é o que foi digitado pelo usuário.
             </div>
           </form>
 
-          {/* table é a tag principal que vai definir a tabela */}
-          {/* thead é a tag que agrupa o cabeçalho */}
-          {/* tr é a linha da tabela */}
-          {/* th título da tabela, um para cada título, ex: nome - idade - estado */}
-          {/* tbody agrupa o corpo da tabela (os dados que será recebido) */}
-
           <table>
             <thead>
               <tr>
@@ -499,16 +445,6 @@ e.target.value é o que foi digitado pelo usuário.
               />
             </div>
 
-            {/* 
-.reduce serve para percorrer a lista inteira e somar os valores de valorFaturado/despesa.
-Soma o total atual com o valor da despesa do item.
-Usa Number(...) para garantir que seja um número (evita erros caso venha uma string).
-O 0 no final é o valor inicial da soma
-
-Usa item.despesa || 0 para evitar undefined — se não tiver valor, ele usa 0.
-.tofixed: Ele formata o número com 2 casas decimais.
-Mesmo que a soma dê 150, ele vai mostrar 150.00.
-Se a soma for 10.5, vai mostrar 10.50. */}
             <div>
               <label> Total Despesa </label>
               <input
